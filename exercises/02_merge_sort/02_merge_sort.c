@@ -14,8 +14,14 @@ Student students[MAX_STUDENTS];
 Student temp[MAX_STUDENTS];
 
 void merge_sort(int left, int right) {
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    int mid;
+
+    if (left >= right) {
+        return;
+    } 
+    mid = (left + right) / 2;
+    merge_sort(left, mid);
+    merge_sort(mid+1, right);
 }
 
 int main(void) {
