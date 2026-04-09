@@ -8,8 +8,20 @@ typedef struct {
 } Student;
 
 void insertion_sort(Student students[], int n) {
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    Student swap_stu;
+    int i, j;
+    for (i = 1; i < n; i++) {
+        j = i;
+        memcpy(swap_stu.name, students[i].name, 20);
+        swap_stu.score = students[i].score;
+        while ((j > 0) && (swap_stu.score > students[j-1].score)) {
+            memcpy(students[j].name, students[j-1].name, 20);
+            students[j].score = students[j-1].score;
+            j--;
+        }
+        memcpy(students[j].name, swap_stu.name, 20);
+        students[j].score = swap_stu.score;
+    }
 }
 
 int main(void) {
