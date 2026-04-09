@@ -19,7 +19,6 @@ void merge_sort(int left, int right) {
     int cur_left, cur_right;
     int i;
 
-    printf("msort(%d, %d)\n", left, right);
     if (left >= right) {
         return;
     }
@@ -47,7 +46,6 @@ void merge_sort(int left, int right) {
 
     for (i = left; i <= right; i++) {
         students[i] = temp[i];
-        printf("%s %d\n", students[i].name, students[i].score);
     }
 }
 
