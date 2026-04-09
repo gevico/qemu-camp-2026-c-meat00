@@ -14,7 +14,15 @@ Student students[MAX_STUDENTS];
 int n;
 int linear_search(const char *target_name) {
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    int i;
+
+    for (i = 0; i < n; i++) {
+        if (0 == strncmp(target_name, students[i].name, NAME_LEN)) {
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 int main(void) {
