@@ -23,12 +23,27 @@ static void josephus_problem(int n, int k, int m) {
 
     // 起始位置移动到第 k 个
     for (int i = 1; i < k; ++i) {
-        // TODO: 在这里添加你的代码
-        // I AM NOT DONE
+        prev = current;
+        current = current->next;
     }
 
-    // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    // 约瑟夫环出列过程
+    while (current->next != current) {
+        // 数 m-1 步
+        for (int i = 1; i < m; ++i) {
+            prev = current;
+            current = current->next;
+        }
+        // 出列
+        printf("%d ", current->id);
+        prev->next = current->next;
+        Node* temp = current;
+        current = current->next;
+        free(temp);
+    }
+    // 最后一个节点
+    printf("%d", current->id);
+    free(current);
     
     printf("\n");
 }
