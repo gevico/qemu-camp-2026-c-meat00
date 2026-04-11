@@ -50,28 +50,46 @@ void free_hash_table(HashTable *table) {
 
 // 插入键值对
 int hash_table_insert(HashTable *table, const char *key, const char *value) {
-  if (!table || !key || !value)
-    return 0;
+    if (!table || !key || !value)
+        return 0;
 
-  unsigned long hash = hash_function(key) % HASH_TABLE_SIZE;
-  HashNode *node = table->buckets[hash];
+    unsigned long hash = hash_function(key) % HASH_TABLE_SIZE;
+    HashNode *node = table->buckets[hash];
 
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    while (node) {
+        if (strcmp(node->key, key) == 0) {
+            free(node->value);
+            node->value = strdup(value);
+            return 1;
+        }
+        node = node->next;
+    }
 
-  return 1;
+    HashNode *new_node = malloc(sizeof(HashNode));
+    new_node->key = strdup(key);
+    new_node->value = strdup(value);
+    new_node->next = table->buckets[hash];
+    table->buckets[hash] = new_node;
+
+    return 1;
 }
 
 // 查找键
 const char *hash_table_lookup(HashTable *table, const char *key) {
-  if (!table || !key)
-    return NULL;
+    if (!table || !key)
+        return NULL;
 
-  unsigned long hash = hash_function(key) % HASH_TABLE_SIZE;
-  HashNode *node = table->buckets[hash];
+    unsigned long hash = hash_function(key) % HASH_TABLE_SIZE;
+    HashNode *node = table->buckets[hash];
 
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    while (node) {
+        if (strcmp(node->key, key) == 0) {
+            return node->value;
+        }
+        node = node->next;
+    }
 
-  return NULL; // 未找到
+    return NULL; // 未找到
 }
