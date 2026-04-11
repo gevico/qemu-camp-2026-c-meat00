@@ -23,20 +23,59 @@ char to_lower(char c) { return tolower(c); }
 
 // 添加单词到哈希表
 void add_word(WordCount **hash_table, const char *word) {
-  unsigned int index = hash(word);
-  WordCount *entry = hash_table[index];
+    unsigned int index = hash(word);
+    WordCount *entry = hash_table[index];
 
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    while (entry != NULL) {
+        if (strcmp(entry->word, word) == 0) {
+            // 找到相同的单词，增加计数
+            entry->count++;
+            return;
+        }
+        entry = entry->next;
+    }
+
+    // 单词不存在，创建新节点
+    WordCount *new_node = (WordCount *)malloc(sizeof(WordCount));
+    if (new_node == NULL) {
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // 复制单词（注意：word是数组，不是指针，所以用strcpy）
+    strncpy(new_node->word, word, MAX_WORD_LEN - 1);
+    new_node->word[MAX_WORD_LEN - 1] = '\0'; // 确保以空字符结尾
+
+    // 初始化计数
+    new_node->count = 1;
+
+    // 使用头插法插入到链表（更高效）
+    new_node->next = hash_table[index];
+    hash_table[index] = new_node;
 }
 
 // 打印单词统计结果
 void print_word_counts(WordCount **hash_table) {
-  printf("Word Count Statistics:\n");
-  printf("======================\n");
+    printf("Word Count Statistics:\n");
+    printf("======================\n");
 
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    int total_words = 0;
+    int unique_words = 0;
+
+    // 遍历整个哈希表
+    for (int i = 0; i < HASH_SIZE; i++) {
+        WordCount *current = hash_table[i];
+
+        // 遍历当前桶的链表
+        while (current != NULL) {
+            printf("%-20s %d\n", current->word, current->count);
+            total_words += current->count;
+            unique_words++;
+            current = current->next;
+        }
+    }
 }
 
 // 释放哈希表内存
